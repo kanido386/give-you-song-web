@@ -23,7 +23,7 @@
     <body class="antialiased">
 
         @foreach ($tracks as $index => $data)
-            <button class="text-lg"><a href="#">{{ $data[0] }} - {{ $data[1] }}</a></button>
+            <button class="text-lg"><a href="{{ route('wow', ['query' => $data[0] . ' ' . $data[1]]) }}">{{ $data[0] }} - {{ $data[1] }}</a></button>
         @endforeach
 
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">

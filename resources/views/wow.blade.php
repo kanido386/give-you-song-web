@@ -22,9 +22,7 @@
     </head>
     <body class="antialiased">
 
-        @foreach ($tracks as $index => $data)
-            <button class="text-lg"><a href="#">{{ $data[0] }} - {{ $data[1] }}</a></button>
-        @endforeach
+    <button class="text-lg"><a href="{{ $videoUrl }}" target="_blank">聽歌去！</a></button>
 
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
             @if (Route::has('login'))

@@ -239,16 +239,17 @@ Route::get('/test/{id}', function ($id) {
     var_dump($randomTracks);
 
 
-    // FIXME:
-    // global $api;
-    $query = "盧廣仲";
-    $type = "track";
-    // $api = Session::get('api');
-    // https://stackoverflow.com/questions/1442177/storing-objects-in-php-session
-    $api = unserialize($_SESSION['api']);
-    var_dump($api->search($query, $type));
-    // var_dump($GLOBALS['api']->search($query, $type));
+    // // FIXME:
+    // // global $api;
+    // $query = "盧廣仲";
+    // $type = "track";
+    // // $api = Session::get('api');
+    // // https://stackoverflow.com/questions/1442177/storing-objects-in-php-session
+    // $api = unserialize($_SESSION['api']);
+    // var_dump($api->search($query, $type));
+    // // var_dump($GLOBALS['api']->search($query, $type));
 
+    // return view('test', ['tracks' => $randomTracks, 'videoUrl' => $videos[0]]);
     return view('test', ['tracks' => $randomTracks]);
 })->name('test');
 // https://laravel.com/docs/master/routing#named-routes
@@ -258,17 +259,35 @@ Route::get('/login', function () {
 
     // FIXME:
     // global $api;
-    $api = new SpotifyService();
+    // $api = new SpotifyService();
     // $GLOBALS['api'] = new SpotifyService();
     // Session::put('api', $api);
 
     // https://stackoverflow.com/questions/1442177/storing-objects-in-php-session
-    $_SESSION['api'] = serialize($api);
+    // $_SESSION['api'] = serialize($api);
 
     return redirect('/');
 });
 
-// Route::get('/wow/{id}', function ($id) {
+Route::get('/wow/{query}', function ($query) {
 
-//     return view('test', ['tracks' => $randomTracks]);
-// })->name('test');
+    $YoutubeApiKey = env('YOUTUBE_API_KEY');
+    $youtube = new Madcoda\Youtube\Youtube(array('key' => $YoutubeApiKey));
+    $videoList = $youtube->searchVideos($query);
+    // https://stackoverflow.com/questions/18576762/php-stdclass-to-array
+    $videoList = json_decode(json_encode($videoList), true);
+    // var_dump($videoList);
+    // var_dump(get_object_vars($videoList));
+    $videos = array();
+    $index = 0;
+    foreach ($videoList as $item) {
+        $videoId = $item['id']['videoId'];
+        $videoUrl = "https://www.youtube.com/watch?v=$videoId";
+        $videos[$index] = $videoUrl;
+        $index++;
+    }
+    var_dump($videos);
+
+    $theVideo = $videos[0];
+    return view('wow', ['videoUrl' => $theVideo]);
+})->name('wow');
