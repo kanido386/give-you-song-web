@@ -236,7 +236,7 @@ Route::get('/test/{id}', function ($id) {
     foreach ($randomIndex as $i => $index) {
         $randomTracks[$index] = $tracks[$index];
     }
-    var_dump($randomTracks);
+    // var_dump($randomTracks);
 
 
     // // FIXME:
@@ -286,7 +286,7 @@ Route::get('/wow/{query}', function ($query) {
         $videos[$index] = $videoUrl;
         $index++;
     }
-    var_dump($videos);
+    // var_dump($videos);
 
     $theVideo = $videos[0];
     return view('wow', ['videoUrl' => $theVideo]);
